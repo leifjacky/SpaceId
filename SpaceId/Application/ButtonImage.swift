@@ -3,7 +3,7 @@ import Foundation
 
 class ButtonImage {
     
-    private let size = CGSize(width: 16, height: 16)
+    private let size = CGSize(width: 48, height: 16)
     private let defaults = UserDefaults.standard
     typealias F = (ButtonImage) -> (SpaceInfo) -> NSImage
     
@@ -121,8 +121,23 @@ class ButtonImage {
         return space.isActive ? 1 : 0.3
     }
     
+    private var spaceDict:[Int:String] = [
+        1:"dev",
+        2:"web",
+        3:"term",
+        4:"chat",
+        5:"play",
+        6:"bt",
+        7:"doc",
+        8:"note",
+        9:"db",
+        10:"tmp",
+    ]
+    
     private func getTextForSpace(space: Space?) -> String {
-        return space.map { $0.number.map { String($0) } ?? "F" } ?? "0"
+        let spaceIdString:String = space.map {$0.number.map { String($0) } ?? "F"  } ?? "0"
+        let spaceTextString:String = space.map { $0.number.map { spaceDict[$0].map { $0 } ?? "F" } ?? "F" } ?? "0"
+        return spaceIdString + ":" + spaceTextString
     }
     
 }
